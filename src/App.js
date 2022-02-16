@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useState } from "react";
 import './app.scss';
 
 // Let's talk about using index.js and some other name in the component folder
@@ -9,7 +9,7 @@ import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
 
-console.log('test');
+
 class App extends React.Component {
 
   constructor(props) {
@@ -21,6 +21,8 @@ class App extends React.Component {
   }
 
   callApi = (requestParams) => {
+
+    let [data, receivedData] = useState(requestParams);
     // mock output
     const data = {
       count: 2,
