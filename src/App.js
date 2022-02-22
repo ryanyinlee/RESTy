@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './app.scss';
 
 // Let's talk about using index.js and some other name in the component folder
@@ -10,55 +10,45 @@ import Form from './components/form';
 import Results from './components/results';
 
 
-class App extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null,
-      requestParams: {},
-    };
-  }
-
-  callApi = (requestParams) => {
-
-    let [data, receivedData] = useState(requestParams);
-    // mock output
-    const data = {
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
-    };
-    this.setState({data, requestParams});
-  }
+function App() {
 
 
-  // callApi = (requestParams) => {
-  //   // mock output
-  //   const data = {
-  //     count: 2,
-  //     results: [
-  //       {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-  //       {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-  //     ],
-  //   };
-  //   this.setState({data, requestParams});
-  // }
+  const [params, setParams] = useState([]);
+  
+  useEffect(() => {
+    console.log("Name value updated.");
+  }, [params]); 
 
-  render() {
-    return (
-      <React.Fragment>
-        <Header />
-        <div>Request Method: {this.state.requestParams.method}</div>
-        <div>URL: {this.state.requestParams.url}</div>
-        <Form handleApiCall={this.callApi} />
-        <Results data={this.state.data} />
-        <Footer />
-      </React.Fragment>
-    );
-  }
+  // useEffect(() => {
+  //   fetch(formData.url)
+  //   .then(results => results.json())
+  //   .then(data => {
+  //     const {name} = data.results[0];
+  //     receivedData
+  //   })
+  //   console.log("Component has mounted.");
+  // }, []); 
+
+
+  function callApi ({method, url})  {    
+    console.log("method: ", method);
+    console.log("URL: ", url);
+    setParams([...params, {method, url}]);
+  };
+
+  // data={thisincomingData}
+  // inside <Results/>
+  return (
+    <React.Fragment>
+      <Header />
+      <div>Request Method: {params.method}</div>
+      <div>URL: {params.url}</div>
+      <Form handleApiCall={callApi} />
+      <Results params={params} />
+      <Footer />
+    </React.Fragment>
+  );
+
 }
 
 export default App;

@@ -3,7 +3,7 @@ import './footer.scss';
 
 class Footer extends React.Component {
   render() {
-    return <footer>&copy; Feb 2022</footer>;
+    return <footer>&copy;Ryan Feb 2022</footer>;
   }
 }
 
